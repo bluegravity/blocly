@@ -35,16 +35,13 @@ public class DataSource {
         feeds.add(new RssFeed("My Favorite Feed",
                 "This feed is just incredible, I can't even begin to tell you…",
                 "http://favoritefeed.net", "http://feeds.feedburner.com/favorite_feed?format=xml"));
-        for (int i = 0; i < numItems; i++) {
-        for (int i = 0; i < numItems; i++) {
-            items.add(new RssItem(String.valueOf(i),
-                    "An incredible news story #" + i,
-                    "You won't believe how exciting this news story is, get ready to be blown away by its amazingness.",
-                    "http://favoritefeed.net?story_id=an-incredible-news-story",
-                    "http://rs1img.memecdn.com/silly-dog_o_511213.jpg",
-                    0, System.currentTimeMillis(), false, false, false));
-        }
+            for (int i = 0; i < numItems; i++) {
+                items.add(new RssItem(String.valueOf(i),
+                        "An incredible news story #" + i,
+                        "You won't believe how exciting this news story is, get ready to be blown away by its amazingness.",
+                        "http://favoritefeed.net?story_id=an-incredible-news-story",
+                        "http://rs1img.memecdn.com/silly-dog_o_511213.jpg",
+                        0, System.currentTimeMillis(), false, false, false));
+            }
     }
-
-
 }
