@@ -29,10 +29,14 @@ public class DataSource {
     }
 
     void createFakeData() {
+
+        int numItems = 15;
+
         feeds.add(new RssFeed("My Favorite Feed",
                 "This feed is just incredible, I can't even begin to tell you…",
                 "http://favoritefeed.net", "http://feeds.feedburner.com/favorite_feed?format=xml"));
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < numItems; i++) {
+        for (int i = 0; i < numItems; i++) {
             items.add(new RssItem(String.valueOf(i),
                     "An incredible news story #" + i,
                     "You won't believe how exciting this news story is, get ready to be blown away by its amazingness.",
