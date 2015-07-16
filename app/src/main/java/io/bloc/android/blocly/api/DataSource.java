@@ -30,7 +30,7 @@ public class DataSource {
 
     void createFakeData() {
 
-        int numItems = 15;
+        int numItems = 10;
 
         feeds.add(new RssFeed("My Favorite Feed",
                 "This feed is just incredible, I can't even begin to tell you…",
