@@ -13,14 +13,18 @@ import android.view.MenuItem;
 
 import io.bloc.android.blocly.R;
 import io.bloc.android.blocly.ui.adaptor.ItemAdapter;
+import io.bloc.android.blocly.ui.adaptor.NavigationDrawerAdapter;
 
 /**
  * Created by Dan on 6/27/2015.
  */
 public class BloclyActivity extends ActionBarActivity {
+    //public class BloclyActivity extends AppCompatActivity {
+
     private ItemAdapter itemAdapter;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
+    private NavigationDrawerAdapter navigationDrawerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +40,18 @@ public class BloclyActivity extends ActionBarActivity {
 //                Toast.LENGTH_LONG).show();
 
         itemAdapter = new ItemAdapter();
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_activity_blocly);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
 
-        // #5
+        navigationDrawerAdapter = new NavigationDrawerAdapter();
+        RecyclerView navigationRecyclerView = (RecyclerView) findViewById(R.id.rv_nav_activity_blocly);
+        navigationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        navigationRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        navigationRecyclerView.setAdapter(navigationDrawerAdapter);
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_activity_blocly);
         // #6
