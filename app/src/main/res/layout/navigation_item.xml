@@ -8,7 +8,7 @@
     <View
         android:id="@+id/v_nav_item_top_padding"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/deafult_padding"/>
+        android:layout_height="@dimen/default_padding"/>
 
     <io.bloc.android.blocly.ui.widget.RobotoTextView
         style="@style/NavigationItem"
@@ -21,7 +21,7 @@
     <View
         android:id="@+id/v_nav_item_bottom_padding"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/deafult_padding"/>
+        android:layout_height="@dimen/default_padding"/>
 
     <View
         android:id="@+id/v_nav_item_divider"
