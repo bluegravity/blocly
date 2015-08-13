@@ -32,9 +32,10 @@ public class BloclyActivity extends ActionBarActivity  implements
         NavigationDrawerAdapter.NavigationDrawerAdapterDelegate,
         ItemAdapter.DataSource,
         ItemAdapter.Delegate {
+
+    private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
-    itemAdapter.setDataSource(this);
-    itemAdapter.setDelegate(this);
+
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private NavigationDrawerAdapter navigationDrawerAdapter;
@@ -46,6 +47,7 @@ public class BloclyActivity extends ActionBarActivity  implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blocly);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_activity_blocly);
         setSupportActionBar(toolbar);
 
@@ -55,7 +57,11 @@ public class BloclyActivity extends ActionBarActivity  implements
 //                Toast.LENGTH_LONG).show();
 
         itemAdapter = new ItemAdapter();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_activity_blocly);
+        itemAdapter.setDataSource(this);
+        itemAdapter.setDelegate(this);
+
+        //RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_activity_blocly);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_activity_blocly);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
@@ -228,11 +234,15 @@ public class BloclyActivity extends ActionBarActivity  implements
     public void onItemClicked(ItemAdapter itemAdapter, RssItem rssItem) {
         int positionToExpand = -1;
         int positionToContract = -1;
-        // #3
+
         if (itemAdapter.getExpandedItem() != null) {
             positionToContract = BloclyApplication.getSharedDataSource().getItems().indexOf(itemAdapter.getExpandedItem());
+            View viewToContract = recyclerView.getLayoutManager().findViewByPosition(positionToContract);
+            if (viewToContract == null) {
+                positionToContract = -1;
+            }
         }
-        // #4
+
         if (itemAdapter.getExpandedItem() != rssItem) {
             positionToExpand = BloclyApplication.getSharedDataSource().getItems().indexOf(rssItem);
             itemAdapter.setExpandedItem(rssItem);
@@ -240,12 +250,23 @@ public class BloclyActivity extends ActionBarActivity  implements
             itemAdapter.setExpandedItem(null);
         }
         if (positionToContract > -1) {
-            // #5a
+
             itemAdapter.notifyItemChanged(positionToContract);
         }
         if (positionToExpand > -1) {
-            // #5b
             itemAdapter.notifyItemChanged(positionToExpand);
+        } else {
+            // #1
+            return;
         }
+
+        int lessToScroll = 0;
+        if (positionToContract > -1 && positionToContract < positionToExpand) {
+            lessToScroll = itemAdapter.getExpandedItemHeight() - itemAdapter.getCollapsedItemHeight();
+        }
+
+        View viewToExpand = recyclerView.getLayoutManager().findViewByPosition(positionToExpand);
+        //recyclerView.smoothScrollBy(0, viewToExpand.getTop());
+        recyclerView.smoothScrollBy(0, viewToExpand.getTop() - lessToScroll);
     }
 }

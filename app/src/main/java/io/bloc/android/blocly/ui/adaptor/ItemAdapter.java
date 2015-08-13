@@ -20,7 +20,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.lang.ref.WeakReference;
 
-import io.bloc.android.blocly.BloclyApplication;
 import io.bloc.android.blocly.R;
 import io.bloc.android.blocly.api.model.RssFeed;
 import io.bloc.android.blocly.api.model.RssItem;
@@ -40,8 +39,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         public void onItemClicked(ItemAdapter itemAdapter, RssItem rssItem);
     }
 
-    private static String TAG = ItemAdapter.class.getSimpleName();
-
     private RssItem expandedItem = null;
     private WeakReference<Delegate> delegate;
     private WeakReference<DataSource> dataSource;
@@ -50,6 +47,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
 
     // for logcat
     private static String TAG = ItemAdapter.class.getSimpleName();
+    private int collapsedItemHeight;
+    private int expandedItemHeight;
 
     @Override
     public ItemAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int index) {
@@ -109,6 +108,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         this.expandedItem = expandedItem;
     }
 
+
+    public int getCollapsedItemHeight() {
+        return collapsedItemHeight;
+    }
+
+    private void setCollapsedItemHeight(int collapsedItemHeight) {
+        this.collapsedItemHeight = collapsedItemHeight;
+    }
+
+    public int getExpandedItemHeight() {
+        return expandedItemHeight;
+    }
+
+    private void setExpandedItemHeight(int expandedItemHeight) {
+        this.expandedItemHeight = expandedItemHeight;
+    }
     // class ItemAdapterViewHolder extends RecyclerView.ViewHolder {
     //class ItemAdapterViewHolder extends RecyclerView.ViewHolder implements ImageLoadingListener {
     class ItemAdapterViewHolder extends RecyclerView.ViewHolder implements ImageLoadingListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -242,7 +257,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
             int startingHeight = expandedContentWrapper.getMeasuredHeight();
             int finalHeight = content.getMeasuredHeight();
             if (expand) {
-                // #3
+                setCollapsedItemHeight(itemView.getHeight());
                 startingHeight = finalHeight;
                 expandedContentWrapper.setAlpha(0f);
                 expandedContentWrapper.setVisibility(View.VISIBLE);
@@ -274,6 +289,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
                     if (animatedFraction == 1f) {
                         if (expand) {
                             content.setVisibility(View.GONE);
+                            setExpandedItemHeight(itemView.getHeight());
                         } else {
                             expandedContentWrapper.setVisibility(View.GONE);
                         }
